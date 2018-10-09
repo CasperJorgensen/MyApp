@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="not_signed_in">You are not signed in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="log_in">Login</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="username_text">Username</string>
+    <string name="username">Username</string>
+    <string name="email_text">Email</string>
+    <string name="email">E-mail</string>
+    <string name="password_text">Password</string>
+    <string name="password">Password</string>
+    <string name="create_new_user">Create new user</string>
+    <string name="sign_out">Sign out</string>
+    <string name="log_in_with_email">Log in with email</string>
+    <string name="delete_user">Delete user</string>
+    <string name="recipe_title">Title</string>
+    <string name="recipe_ingredients_card_title">Ingredients</string>
+    <string name="steps_txt_card">Steps</string>
+    <string name="notes_txt">Notes</string>
+    <string name="user_notes">User notes with very long string because some people write a lot of text and I can\'t figure out what more to write so maybe i\n support multiline\n text</string>
+    <string name="recipe_add_ingredient">Add ingredient</string>
+    <string name="create_recipe_button">Create recipe</string>
+    <string name="add_ingredient_button">Add</string>
+</resources>
