@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
 
@@ -34,6 +33,12 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".CreateRecipeActivity"></activity>
+
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
     </application>
 
 </manifest>

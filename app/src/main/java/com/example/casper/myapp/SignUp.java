@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.perf.FirebasePerformance;
+import com.google.firebase.perf.metrics.AddTrace;
+import com.google.firebase.perf.metrics.Trace;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +55,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    @AddTrace(name = "createAccount", enabled = true)
     private void createAccount(final String email, String password) {
+        Trace myTrace = FirebasePerformance.getInstance().newTrace("createAccountTrace");
+        myTrace.start();
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -77,7 +83,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             user.put("email", txtEmail.getText().toString());
 
 
-                            db.collection("users").document(txtUsername.getText().toString())
+                            db.collection(txtUsername.getText().toString())
+                                    .document("user")
                                     .set(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -105,6 +112,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     }
                 });
         // [END create_user_with_email]
+        myTrace.stop();
     }
 
     private boolean validateForm() {

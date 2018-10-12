@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void signIn(String email, String password) {
+        if (!validateForm()) {
+            return;
+        }
         final Intent intent = new Intent(this, MainActivity.class);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -61,5 +65,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
+    }
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String email = txtEmail.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            txtEmail.setError("Required");
+            valid = false;
+        } else {
+            txtEmail.setError(null);
+        }
+
+        String password = txtPassword.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            txtPassword.setError("Required");
+            valid = false;
+        } else {
+            txtPassword.setError(null);
+        }
+
+        return valid;
     }
 }
