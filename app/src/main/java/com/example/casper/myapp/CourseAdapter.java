@@ -12,9 +12,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHolder> {
@@ -23,15 +22,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
     private List<Course> courseList;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, count;
+        public TextView title, count, date, author;
         public ImageView thumbnail, overflow;
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            count = (TextView) view.findViewById(R.id.count);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            author = (TextView) view.findViewById(R.id.recipe_main_author);
+            title = (TextView) view.findViewById(R.id.recipe_card_title);
+            count = (TextView) view.findViewById(R.id.recipe_card_servings);
+            thumbnail = (ImageView) view.findViewById(R.id.recipe_card_thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
+            date = (TextView) view.findViewById(R.id.recipe_main_date);
         }
     }
 
@@ -50,9 +51,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+        String author = mContext.getString(R.string.recipe_author);
+        String meal = mContext.getString(R.string.recipe_meal);
+        String serves = mContext.getString(R.string.recipe_servers);
+        String dates = mContext.getString(R.string.recipe_date_created);
         Course course = courseList.get(position);
+        Date date = course.getDateCreated();
+        holder.author.setText(author + ": " + course.getAuthor());
         holder.title.setText(course.getCourseName());
-        holder.count.setText("Meal: " + course.getMeal() + "\n" + "Serves: " + course.getNumberOfServings());
+        holder.count.setText(meal + ": " + course.getMeal() + "\n" + serves + ": " + course.getNumberOfServings());
+        holder.date.setText(dates + ": " + DateFormat.getDateInstance(DateFormat.MEDIUM).format(date));
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override

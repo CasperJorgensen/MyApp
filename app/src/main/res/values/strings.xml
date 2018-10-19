@@ -1,24 +1,24 @@
 <resources>
     <string name="app_name">MyApp</string>
     <string name="not_signed_in">You are not signed in</string>
-    <string name="sign_up">Sign up</string>
-    <string name="log_in">Login</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="sign_up" translatable="false">Sign up</string>
+    <string name="log_in" translatable="false">Login</string>
+    <string name="title_activity_login" translatable="false">Sign in</string>
     <string name="username_text">Username</string>
     <string name="username">Username</string>
-    <string name="email_text">Email</string>
-    <string name="email">E-mail</string>
-    <string name="password_text">Password</string>
-    <string name="password">Password</string>
+    <string name="email_text" translatable="false">Email</string>
+    <string name="email" translatable="false">E-mail</string>
+    <string name="password_text" translatable="false">Password</string>
+    <string name="password" translatable="false">Password</string>
     <string name="create_new_user">Create new user</string>
-    <string name="sign_out">Sign out</string>
+    <string name="sign_out">Log out</string>
     <string name="log_in_with_email">Log in with email</string>
     <string name="delete_user">Delete user</string>
     <string name="recipe_title">Title</string>
     <string name="recipe_ingredients_card_title">Ingredients</string>
     <string name="steps_txt_card">Steps</string>
-    <string name="notes_txt">Notes</string>
-    <string name="user_notes">User notes with very long string because some people write a lot of text and I can\'t figure out what more to write so maybe i\n support multiline\n text</string>
+    <string name="notes_txt" translatable="false">Notes</string>
+    <string name="user_notes" translatable="false">User notes with very long string because some people write a lot of text and I can\'t figure out what more to write so maybe i\n support multiline\n text</string>
     <string name="recipe_add_ingredient">Add ingredient</string>
     <string name="create_recipe_button">Create recipe</string>
     <string name="add_ingredient_button">Add</string>
@@ -26,9 +26,36 @@
     <string name="action_settings">Settings</string>
     <string name="action_add_favourite">Add to Favourites</string>
     <string name="action_play_next">Play Next</string>
-    <string name="backdrop_title">LOVE FOOD</string>
-    <string name="backdrop_subtitle"></string>
+    <string name="backdrop_title" translatable="false">LOVE FOOD</string>
+    <string name="backdrop_subtitle" translatable="false"></string>
     <string name="no_of_servings">No. of servings</string>
     <string name="save_recipe">Save recipe</string>
     <string name="what_meal_is_it">Meal; eg breakfast, lunch, dinner</string>
+    <string name="recipe_card_ingredients_text">Ingredients</string>
+    <string name="recipe_card_steps_text">Steps</string>
+    <string name="recipe_card_ingredients_steps_text">Steps</string>
+    <string name="dialog_create_recipe">Create recipe</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="recipe_author">Author</string>
+    <string name="recipe_meal">Meal</string>
+    <string name="recipe_servers">Serves</string>
+    <string name="recipe_date_created">Created</string>
+
+    <array name="main_items">
+        <item>List - </item>
+        <item>Grid - </item>
+    </array>
+
+    <array name="dummy_items">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+        <item>Six</item>
+        <item>Seven</item>
+        <item>Eight</item>
+        <item>Nine</item>
+        <item>Ten</item>
+    </array>
 </resources>

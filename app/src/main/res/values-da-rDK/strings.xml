@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="recipe_author">Forfatter</string>
+    <string name="not_signed_in" translatable="false">Du er ikke logget ind</string>
+    <string name="username_text" translatable="false">Brugernavn</string>
+    <string name="username" translatable="false">Brugernavn</string>
+    <string name="create_new_user" translatable="false">Opret ny bruger</string>
+    <string name="sign_out" translatable="false">Log ud</string>
+    <string name="log_in_with_email" translatable="false">Log ind med email</string>
+    <string name="delete_user" translatable="false">Slet bruger</string>
+    <string name="recipe_title" translatable="false">Titel</string>
+    <string name="recipe_ingredients_card_title" translatable="false">Ingredienser</string>
+    <string name="steps_txt_card" translatable="false">Trin</string>
+    <string name="recipe_add_ingredient" translatable="false">Tilføj ingrediens</string>
+    <string name="create_recipe_button" translatable="false">Opret opskrift</string>
+    <string name="add_ingredient_button" translatable="false">Tilføj</string>
+    <string name="recipe_add_step" translatable="false">Tilføj trin</string>
+    <string name="action_settings" translatable="false">Indstillinger</string>
+    <string name="action_add_favourite" translatable="false">Tilføj til favorit</string>
+    <string name="action_play_next" translatable="false">Spil næste</string>
+    <string name="no_of_servings" translatable="false">Servere</string>
+    <string name="save_recipe" translatable="false">Gem opskrift</string>
+    <string name="what_meal_is_it" translatable="false">Måltid; fx morgenmad, middag</string>
+    <string name="recipe_card_ingredients_text">Ingredienser</string>
+    <string name="recipe_card_steps_text" translatable="false">Trin</string>
+    <string name="recipe_card_ingredients_steps_text" translatable="false">Trin</string>
+    <string name="dialog_create_recipe" translatable="false">Opret opskrift</string>
+    <string name="dialog_cancel" translatable="false">Annuller</string>
+    <string name="recipe_meal" translatable="false">Måltid</string>
+    <string name="recipe_servers" translatable="false">Serverer</string>
+    <string name="recipe_date_created" translatable="false">Oprettet</string>
+</resources>
