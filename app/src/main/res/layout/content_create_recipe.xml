@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,8 +13,71 @@
     tools:context="com.example.casper.myapp.CreateRecipeActivity"
     tools:showIn="@layout/activity_create_recipe">
 
+    <EditText
+        android:id="@+id/edit_text_create_title"
+        android:hint="@string/recipe_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_serves"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_text_create_title">
+
+        <!--<TextView-->
+            <!--android:id="@+id/textview_create_recipe_serves_text"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/no_of_servings"-->
+            <!--android:layout_weight="0.8"/>-->
+        <EditText
+            android:id="@+id/edit_text_create_recipe_serves"
+            android:hint="@string/no_of_servings"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:inputType="number"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_create_recipe_ingredients"
+        android:layout_below="@+id/linear_layout_serves"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/content_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_ingredients"
+        android:layout_below="@+id/recycler_view_create_recipe_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_text_ingredients"
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
+            android:hint="@string/recipe_add_ingredient"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button_add_ingredient"
+            android:text="@string/add_ingredient_button"
+            android:layout_weight="0.2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_create_recipe_steps"
+        android:layout_below="@id/linear_layout_ingredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -22,14 +89,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/editTextTest"
+    <LinearLayout
+        android:id="@+id/linear_layout_steps"
         android:layout_below="@id/recycler_view_create_recipe_steps"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/edit_text_step"
+        android:layout_width="0dp"
+        android:layout_weight="0.8"
+        android:hint="@string/edit_text_step"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/buttonTest"
-        android:layout_below="@id/editTextTest"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_add_step"
+        android:layout_toRightOf="@id/edit_text_step"
+        android:text="@string/button_add_step"
+        android:layout_width="0dp"
+        android:layout_weight="0.2"
         android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_save_recipe"
+        android:text="@string/save_recipe"
+        android:layout_below="@id/linear_layout_steps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>
+</ScrollView>

@@ -18,16 +18,16 @@ import com.example.casper.myapp.helper.OnStartDragListener;
 import java.util.Collections;
 import java.util.List;
 
-public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder>
+public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsListAdapter.ItemViewHolder>
         implements ItemTouchHelperAdapter {
 
     List<String> mListing;
 
     private final OnStartDragListener mDragStartListener;
 
-    public RecyclerListAdapter(Context context, List<String> listing, OnStartDragListener dragStartListener) {
+    public IngredientsListAdapter(Context context, List<String> listing, OnStartDragListener dragListener) {
         this.mListing = listing;
-        mDragStartListener = dragStartListener;
+        mDragStartListener = dragListener;
     }
 
     @Override
@@ -41,7 +41,6 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.textView.setText(mListing.get(position));
 
-        // Start a drag whenever the handle view it touched
         holder.handleView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -71,10 +70,6 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         return mListing.size();
     }
 
-    /**
-     * Simple example of a view holder that implements {@link ItemTouchHelperViewHolder} and has a
-     * "handle" view that initiates a drag event when touched.
-     */
     public static class ItemViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder {
 

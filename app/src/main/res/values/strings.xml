@@ -40,6 +40,8 @@
     <string name="recipe_meal">Meal</string>
     <string name="recipe_servers">Serves</string>
     <string name="recipe_date_created">Created</string>
+    <string name="button_add_step">add</string>
+    <string name="edit_text_step">Add step</string>
 
     <array name="main_items">
         <item>List - </item>
