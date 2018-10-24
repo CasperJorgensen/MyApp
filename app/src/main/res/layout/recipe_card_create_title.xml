@@ -10,6 +10,7 @@
                 android:paddingLeft="@dimen/album_title_padding"
                 android:paddingRight="@dimen/album_title_padding"
                 android:paddingTop="@dimen/album_title_padding"
+                android:inputType="textCapWords"
                 android:textColor="@color/album_title"
                 android:textSize="@dimen/recipe_card_title"
                 android:hint="@string/recipe_title"/>

@@ -2,7 +2,6 @@ package com.example.casper.myapp;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class Course {
     private String author;
@@ -12,9 +11,9 @@ public class Course {
     private List<String> ingredients;
     private List<String> steps;
     private Date dateCreated;
-    private Map<String, String> testMap;
+    private String picturePath;
 
-    public Course(String author, String courseName, String meal, int numberOfServings, List<String> ingredients, List<String> steps, Date dateCreated, Map<String, String> testMap) {
+    public Course(String author, String courseName, String meal, int numberOfServings, List<String> ingredients, List<String> steps, Date dateCreated, String picturePath) {
         this.author = author;
         this.courseName = courseName;
         this.meal = meal;
@@ -22,7 +21,7 @@ public class Course {
         this.ingredients = ingredients;
         this.steps = steps;
         this.dateCreated = dateCreated;
-        this.testMap = testMap;
+        this.picturePath = picturePath;
     }
 
     public Course() {
@@ -32,12 +31,12 @@ public class Course {
         this.steps = steps;
     }
 
-    public Map<String, String> getTestMap() {
-        return testMap;
+    public String getPicturePath() {
+        return picturePath;
     }
 
-    public void setTestMap(Map<String, String> testMap) {
-        this.testMap = testMap;
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 
     public String getAuthor() {

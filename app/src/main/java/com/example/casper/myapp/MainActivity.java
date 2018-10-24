@@ -30,9 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,30 +48,18 @@ public class MainActivity extends AppCompatActivity {
     private CourseAdapter courseAdapter;
     private List<Course> courseList;
 
-    private static final String WELCOME_MESSAGE_KEY = "welcome_message";
-    private static final String LOADING_PHRASE_CONFIG_KEY = "loading_phrase";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .build();
-        mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+        mAuth = FirebaseAuth.getInstance();
 
-        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-        FirebaseRemoteConfig.getInstance();
-
-        fetchWelcome();
-
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+        if (mAuth.getInstance().getCurrentUser() == null) {
             Intent intent = new Intent(this, UnsignedUser.class);
             startActivity(intent);
         }
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main);
 
@@ -98,10 +84,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        prepareRecipes();
-
-        mAuth = FirebaseAuth.getInstance();
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        prepareRecipes();
+
 //        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
 //        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
@@ -117,35 +101,23 @@ public class MainActivity extends AppCompatActivity {
 //                pullToRefresh.setRefreshing(false);
 //            }
 //        });
-    }
 
-    private void fetchWelcome() {
-
-        long cacheExpiration = 3600;
-
-        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
-            cacheExpiration = 0;
-        }
-
-        mFirebaseRemoteConfig.fetch(cacheExpiration)
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            mFirebaseRemoteConfig.activateFetched();
-                        }
-                    }
-                });
+//        prepareRecipes();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Intent intent = new Intent(this, UnsignedUser.class);
+        if (mAuth.getInstance().getCurrentUser() == null) {
+            Intent intent = new Intent(MainActivity.this, UnsignedUser.class);
             startActivity(intent);
         }
-        mAuth.getCurrentUser().getDisplayName();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        prepareRecipes();
     }
 
 //    private void initCollapsingToolbar() {
@@ -176,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void prepareRecipes() {
+        courseList.clear();
         mAuth = FirebaseAuth.getInstance();
         String user = mAuth.getCurrentUser().getDisplayName();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -242,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         String createRecipe = getString(R.string.dialog_create_recipe);
         String cancelCreateRecipe = getString(R.string.dialog_cancel);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(mFirebaseRemoteConfig.getString(LOADING_PHRASE_CONFIG_KEY));
+        builder.setTitle("Create new recipe");
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
@@ -277,8 +250,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.signOut:
-                mAuth.signOut();
-                startActivity(new Intent(this, UnsignedUser.class));
+                mAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this, UnsignedUser.class));
                 return true;
             case R.id.deleteUser:
                 deleteUser();

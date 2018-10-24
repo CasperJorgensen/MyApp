@@ -19,6 +19,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
         public MyViewHolder(View view) {
             super(view);
+
             title = (TextView) view.findViewById(R.id.recipe_card_title);
             servings = (TextView) view.findViewById(R.id.recipe_card_servings);
             meal = (TextView) view.findViewById(R.id.recipe_card_meal);
@@ -40,6 +41,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+
         Course course = recipeList.get(position);
         holder.title.setText(course.getCourseName());
         holder.servings.setText("Serves: " + course.getNumberOfServings());

@@ -1,6 +1,8 @@
 package com.example.casper.myapp;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -11,6 +13,13 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -51,12 +60,38 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+
+
         String author = mContext.getString(R.string.recipe_author);
         String meal = mContext.getString(R.string.recipe_meal);
         String serves = mContext.getString(R.string.recipe_servers);
         String dates = mContext.getString(R.string.recipe_date_created);
         Course course = courseList.get(position);
         Date date = course.getDateCreated();
+
+        FirebaseStorage storage;
+        StorageReference storageReference;
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        storageReference.child(course.getPicturePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(mContext)
+                        .load(uri)
+                        .apply(new RequestOptions().centerCrop())
+                        .into(holder.thumbnail);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Glide.with(mContext)
+                        .load("https://firebasestorage.googleapis.com/v0/b/workingapp-28df8.appspot.com/o/images%2Fphone.png?alt=media&token=78ad2c6d-bdfe-4b82-8bc3-1648e8e604fd")
+                        .into(holder.thumbnail);
+            }
+        });
+
         holder.author.setText(author + ": " + course.getAuthor());
         holder.title.setText(course.getCourseName());
         holder.count.setText(meal + ": " + course.getMeal() + "\n" + serves + ": " + course.getNumberOfServings());

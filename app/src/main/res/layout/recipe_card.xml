@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/recipe_card_thumbnail"
+                android:id="@+id/recipe_card_thumbnail1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"

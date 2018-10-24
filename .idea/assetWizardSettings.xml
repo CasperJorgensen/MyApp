@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/snap/android-studio/67/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_reorder_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/snap/android-studio/67/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_insert_photo_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,7 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="$USER_HOME$/Downloads/add.svg" />
-                                      <entry key="outputName" value="ic_reorder" />
+                                      <entry key="outputName" value="ic_insertphoto" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>
                                 </PersistentState>
