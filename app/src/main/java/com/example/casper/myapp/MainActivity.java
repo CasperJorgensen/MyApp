@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
 
         if (mAuth.getInstance().getCurrentUser() == null) {
             Intent intent = new Intent(this, UnsignedUser.class);
@@ -101,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
 //                pullToRefresh.setRefreshing(false);
 //            }
 //        });
-
-//        prepareRecipes();
     }
 
     @Override
@@ -117,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        prepareRecipes();
     }
 
 //    private void initCollapsingToolbar() {

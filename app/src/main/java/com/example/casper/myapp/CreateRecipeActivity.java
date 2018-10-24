@@ -144,14 +144,18 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.button_add_step) {
-            steps.add(editTextStep.getText().toString());
-            adapter.notifyDataSetChanged();
-            editTextStep.setText("");
+            if (!editTextStep.getText().toString().isEmpty()) {
+                steps.add(editTextStep.getText().toString());
+                adapter.notifyDataSetChanged();
+                editTextStep.setText("");
+            }
         }
         if (i == R.id.button_add_ingredient) {
-            ingredients.add(editTextIngredient.getText().toString());
-            iAdapter.notifyDataSetChanged();
-            editTextIngredient.setText("");
+            if (!editTextIngredient.getText().toString().isEmpty()) {
+                ingredients.add(editTextIngredient.getText().toString());
+                iAdapter.notifyDataSetChanged();
+                editTextIngredient.setText("");
+            }
         }
         if (i == R.id.button_save_recipe) {
             saveRecipe();
@@ -205,37 +209,6 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (choosePhoto.getCropImageUrl() != null) {
-//            final ProgressDialog progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("Uploading...");
-//            progressDialog.show();
-//
-//            StorageReference ref = storageReference.child(imagePath);
-//            ref.putFile(choosePhoto.getCropImageUrl())
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(CreateRecipeActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(CreateRecipeActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    })
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-//                                    .getTotalByteCount());
-//                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-//                        }
-//                    });
-//        }
     }
 
     private void saveRecipe() {
@@ -289,12 +262,12 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
             editServings.setError(null);
         }
 
-        if (ingredients.isEmpty()) {
-            editTextIngredient.setError("Remember to add ingredients");
-            valid = false;
-        } else {
-            editTextIngredient.setError(null);
-        }
+//        if (ingredients.isEmpty()) {
+//            editTextIngredient.setError("Remember to add ingredients");
+//            valid = false;
+//        } else {
+//            editTextIngredient.setError(null);
+//        }
 
         return valid;
     }
@@ -330,7 +303,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     choosePhoto.handleCameraResult(choosePhoto.getCameraUri());
                 }
-            } else if (requestCode == ChoosePhoto.SELECTED_IMG_CROP) {
+            }else if (requestCode == ChoosePhoto.SELECTED_IMG_CROP) {
                 imageView.setImageURI(choosePhoto.getCropImageUrl());
             }
         }
@@ -340,14 +313,9 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == ChoosePhoto.SELECT_PICTURE_CAMERA) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 choosePhoto.showAlertDialog();
-            }
         }
-    }
-
-    private void performCrop() {
-
     }
 
     @Override
