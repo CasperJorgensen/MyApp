@@ -14,7 +14,6 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,8 +34,6 @@ public class ChoosePhoto {
     private int OUT_PUT_X = 1400;
     private int OUT_PUT_Y = 1400;
     private boolean SCALE = true;
-
-    private String TAG = "cropcrop";
 
     private Uri cropPictureUrl, selectedImageUri = null, cameraUrl = null;
     private Context mContext;
@@ -90,8 +87,7 @@ public class ChoosePhoto {
             File file = new File(realPathFromURI == null ? getImageUrlWithAuthority(mContext, data.getData()) : realPathFromURI);
             if (file.exists()) {
                 if (currentAndroidDeviceVersion > 23) {
-                    cropImage(FileProvider.getUriForFile(mContext, mContext.getApplicationContext()+"", file), cropPictureUrl);
-                    Log.d(TAG, "picture not crop");
+                    cropImage(FileProvider.getUriForFile(mContext,  "myapp.provider", file), cropPictureUrl);
 
                 } else {
                     cropImage(Uri.fromFile(file), cropPictureUrl);
@@ -144,8 +140,8 @@ public class ChoosePhoto {
             e.printStackTrace();
 
         }
-    }
 
+    }
 
     public Uri getCameraUri() {
         return cameraUrl;

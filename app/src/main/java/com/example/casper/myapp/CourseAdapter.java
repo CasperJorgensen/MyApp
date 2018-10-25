@@ -32,7 +32,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count, date, author;
-        public ImageView thumbnail, overflow;
+        public ImageView thumbnail, overflow, imageView;
 
         public MyViewHolder(View view) {
             super(view);

@@ -40,7 +40,9 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class CreateRecipeActivity extends AppCompatActivity implements View.OnClickListener, OnStartDragListener, AdapterView.OnItemSelectedListener {
@@ -63,6 +65,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     private Button addStep, addIngredient, saveRecipe;
     private EditText editTextStep, editTextIngredient, editTitle, editServings, editMeal;
     List<String> steps, ingredients;
+    Map<String, List<String>> ingredientsList;
     private String TAG = "Woo";
     private ImageView imageView;
     private Uri filePath;
@@ -97,6 +100,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
 
         steps = new ArrayList<>();
         ingredients = new ArrayList<>();
+        ingredientsList = new HashMap<String, List<String>>();
 
         adapter = new RecyclerListAdapter(context, steps, this);
         iAdapter = new IngredientsListAdapter(context, ingredients, this);
@@ -281,7 +285,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_camera:
-                takePicture();
+                choosePhoto = new ChoosePhoto(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
