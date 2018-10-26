@@ -9,22 +9,22 @@ public class Course {
     private String courseName;
     private String meal;
     private int numberOfServings;
-    private List<String> ingredients;
+//    private List<String> ingredients;
     private List<String> steps;
     private Date dateCreated;
     private String picturePath;
-    private Map<String, List<String>> ingredientsList;
+    private Map<String, List<String>> ingredients;
 
-    public Course(String author, String courseName, String meal, int numberOfServings, List<String> ingredients, List<String> steps, Date dateCreated, String picturePath, Map<String, List<String>> ingredientsList) {
+    public Course(String author, String courseName, String meal, int numberOfServings, List<String> steps, Date dateCreated, String picturePath, Map<String, List<String>> ingredients) {
         this.author = author;
         this.courseName = courseName;
         this.meal = meal;
         this.numberOfServings = numberOfServings;
-        this.ingredients = ingredients;
+//        this.ingredients = ingredients;
         this.steps = steps;
         this.dateCreated = dateCreated;
         this.picturePath = picturePath;
-        this.ingredientsList = ingredientsList;
+        this.ingredients = ingredients;
     }
 
     public Course() {
@@ -34,12 +34,12 @@ public class Course {
         this.steps = steps;
     }
 
-    public Map<String, List<String>> getIngredientsList() {
-        return ingredientsList;
+    public Map<String, List<String>> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredientsList(Map<String, List<String>> ingredientsList) {
-        this.ingredientsList = ingredientsList;
+    public void setIngredients(Map<String, List<String>> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public String getPicturePath() {
@@ -82,13 +82,13 @@ public class Course {
         this.numberOfServings = numberOfServings;
     }
 
-    public List<String> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<String> ingredients) {
-        this.ingredients = ingredients;
-    }
+//    public List<String> getTestIngredientList() {
+//        return ingredients;
+//    }
+//
+//    public void setTestIngredientList(List<String> ingredients) {
+//        this.ingredients = ingredients;
+//    }
 
     public List<String> getSteps() {
         return steps;

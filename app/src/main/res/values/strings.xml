@@ -42,7 +42,7 @@
     <string name="recipe_date_created">Created</string>
     <string name="button_add_step">add</string>
     <string name="edit_text_step">Add step</string>
-    <string name="ingredients">Ingredients</string>
+    <string name="testIngredientList">Ingredients</string>
     <string name="steps">Steps</string>
 
     <array name="main_items">

@@ -56,7 +56,7 @@
 
     <TextView
         android:id="@+id/text_ingredients"
-        android:text="@string/ingredients"
+        android:text="@string/testIngredientList"
         android:textSize="18dp"
         android:layout_below="@id/servings_divider"
         android:layout_width="wrap_content"

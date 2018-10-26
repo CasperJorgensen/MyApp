@@ -38,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -219,6 +220,10 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         if (!validateForm()) {
             return;
         }
+
+        ingredientsList.put("Better batter", Arrays.asList("One", "Two", "Three"));
+        ingredientsList.put("New batter", Arrays.asList("Four", "Five", "Six"));
+        setTitle(ingredientsList.keySet().toArray()[0] + "");
         mAuth = FirebaseAuth.getInstance();
         String imagePath = mAuth.getCurrentUser().getDisplayName() + "/" + editTitle.getText().toString();
         String user = mAuth.getCurrentUser().getDisplayName();
@@ -229,11 +234,22 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
                 editTitle.getText().toString(),
                 spinner.getSelectedItem().toString(),
                 Integer.parseInt(editServings.getText().toString()),
-                ingredients,
                 steps,
                 date,
-                imagePath
+                imagePath,
+                ingredientsList
         );
+
+//        Course course = new Course(
+//                "This user",
+//                "Title",
+//                "spinnerpick",
+//                3,
+//                stepsList,
+//                date,
+//                "path",
+//                ingredients
+//        );
 
         db.collection(user)
                 .document(editTitle.getText().toString())
