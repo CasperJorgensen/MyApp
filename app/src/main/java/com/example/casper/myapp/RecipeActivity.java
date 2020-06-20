@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
-    private List<Course> recipeList;
-    private List<Course> ingredientsList;
-    private List<Course> stepsList;
+    private List<Recipe> recipeList;
+    private List<Recipe> ingredientsList;
+    private List<Recipe> stepsList;
 
     private String TAG = "Super";
     private FirebaseAuth mAuth;
@@ -98,12 +98,12 @@ public class RecipeActivity extends AppCompatActivity {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Course course = documentSnapshot.toObject(Course.class);
-                recipeList.add(course);
-                ingredientsList.add(course);
+                Recipe recipe = documentSnapshot.toObject(Recipe.class);
+                recipeList.add(recipe);
+                ingredientsList.add(recipe);
                 adapter.notifyDataSetChanged();
                 iAdapter.notifyDataSetChanged();
-                stepsList.add(course);
+                stepsList.add(recipe);
                 sAdapter.notifyDataSetChanged();
             }
         });

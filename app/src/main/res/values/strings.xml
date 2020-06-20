@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyApp</string>
+    <string name="app_name">Opskriften</string>
     <string name="not_signed_in">You are not signed in</string>
     <string name="sign_up" translatable="false">Sign up</string>
     <string name="log_in" translatable="false">Login</string>
@@ -14,6 +14,7 @@
     <string name="sign_out">Log out</string>
     <string name="log_in_with_email">Log in with email</string>
     <string name="delete_user">Delete user</string>
+    <string name="search" translatable="false">Search</string>
     <string name="recipe_title">Title</string>
     <string name="recipe_ingredients_card_title">Ingredients</string>
     <string name="steps_txt_card">Steps</string>
@@ -56,7 +57,7 @@
         <item>Soup</item>
         <item>Entrée</item>
         <item>Roast</item>
-        <item>Main course</item>
+        <item>Main recipe</item>
         <item>Salad</item>
         <item>Side dish</item>
         <item>Entremet</item>

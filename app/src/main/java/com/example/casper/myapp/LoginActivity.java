@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginButton;
     private FirebaseAuth mAuth;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = (Button)findViewById(R.id.loginButton);
         txtEmail = (EditText) findViewById(R.id.emailLoginText);
         txtPassword = (EditText) findViewById(R.id.passwordLoginText);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         findViewById(R.id.loginButton).setOnClickListener(this);
 
@@ -58,6 +63,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d(TAG, "signInWithEmail:succes");
                             FirebaseUser user = mAuth.getCurrentUser();
                             startActivity(intent);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Param.METHOD, "method");
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed. ", Toast.LENGTH_SHORT).show();

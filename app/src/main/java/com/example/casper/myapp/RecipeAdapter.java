@@ -22,7 +22,7 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Course> recipeList;
+    private List<Recipe> recipeList;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, servings, meal;
@@ -38,7 +38,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         }
     }
 
-    public RecipeAdapter(Context mContext, List<Course> recipeList) {
+    public RecipeAdapter(Context mContext, List<Recipe> recipeList) {
         this.mContext = mContext;
         this.recipeList = recipeList;
     }
@@ -60,27 +60,35 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        Course course = recipeList.get(position);
+        Recipe recipe = recipeList.get(position);
 
-        storageReference.child(course.getPicturePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(mContext)
-                        .load(uri)
-                        .apply(new RequestOptions().centerCrop())
-                        .into(holder.imageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Glide.with(mContext)
-                        .load("https://firebasestorage.googleapis.com/v0/b/workingapp-28df8.appspot.com/o/images%2Fphone.png?alt=media&token=78ad2c6d-bdfe-4b82-8bc3-1648e8e604fd")
-                        .into(holder.imageView);
-            }
-        });
-        holder.title.setText(course.getCourseName());
-        holder.servings.setText("Serves: " + course.getNumberOfServings());
-        holder.meal.setText("Meal: " + course.getMeal());
+        Glide.with(mContext)
+                .load("https://madenimitliv.dk/wp-content/uploads/2019/06/DSC_0014.jpg")
+                .into(holder.imageView);
+
+//        storageReference.child(recipe.getPicturePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Glide.with(mContext)
+//                        .load("https://madenimitliv.dk/wp-content/uploads/2019/06/DSC_0014.jpg")
+////                        .apply(new RequestOptions().centerCrop())
+//                        .into(holder.imageView);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Glide.with(mContext)
+//                        .load("https://madenimitliv.dk/wp-content/uploads/2019/06/DSC_0014.jpg")
+//                        .into(holder.imageView);
+//            }
+//        });
+//        holder.title.setText(recipe.getTitle());
+//        holder.servings.setText("Serves: " + recipe.getNumberOfServings());
+//        holder.meal.setText("Meal: " + recipe.getMeal());
+
+        holder.title.setText("Title");
+        holder.servings.setText("Serves: ");
+        holder.meal.setText("Meal: ");
 
 
     }

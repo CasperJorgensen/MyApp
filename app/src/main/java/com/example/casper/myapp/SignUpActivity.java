@@ -15,19 +15,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.perf.metrics.Trace;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignUp extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText txtUsername;
     private EditText txtEmail;
     private EditText txtPassword;
@@ -35,10 +36,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private String TAG = "EmailPassword";
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -50,6 +55,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         findViewById(R.id.signUpUserButton).setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.METHOD, "method");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
 
     }
 
@@ -70,18 +79,22 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser username = mAuth.getCurrentUser();
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(txtUsername.getText().toString()).build();
-                            username.updateProfile(profileUpdates);
+//                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                                    .setDisplayName(txtUsername.getText().toString()).build();
+//                            username.updateProfile(profileUpdates);
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             Map<String, Object> user = new HashMap<>();
+                            user.put("uid", mAuth.getUid());
                             user.put("username", txtUsername.getText().toString());
                             user.put("email", txtEmail.getText().toString());
+                            user.put("followers", 0);
+                            user.put("follows", 0);
+                            user.put("noOfRecipies", 0);
+                            user.put("dateCreated", Calendar.getInstance().getTime());
 
-
-                            db.collection(txtUsername.getText().toString())
+                            db.collection(username.getUid())
                                     .document("user")
                                     .set(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -96,12 +109,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                             Log.w(TAG, "Error adding document", e);
                                         }
                                     });
-
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignUp.this, "Authentication failed." + task.getException(),
+                            Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         }
 

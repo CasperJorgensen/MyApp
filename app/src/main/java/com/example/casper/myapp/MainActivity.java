@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,10 +28,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.perf.FirebasePerformance;
+import com.google.firebase.perf.metrics.Trace;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,16 +52,17 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private CourseAdapter courseAdapter;
-    private List<Course> courseList;
+    private List<Recipe> recipeList;
+    private FirebaseAuth instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mAuth = FirebaseAuth.getInstance();
+        mAuth = instance;
 
-        if (mAuth.getInstance().getCurrentUser() == null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Intent intent = new Intent(this, UnsignedUser.class);
             startActivity(intent);
         }
@@ -63,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main);
 
-        courseList = new ArrayList<>();
-        courseAdapter = new CourseAdapter(this, courseList);
+        recipeList = new ArrayList<>();
+        courseAdapter = new CourseAdapter(this, recipeList);
 
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 //Toast.makeText(MainActivity.this, "Clicked" + courseList.get(position).getCourseName(), Toast.LENGTH_SHORT).show();
-                String clickedCourse = courseList.get(position).getCourseName();
+                String clickedCourse = recipeList.get(position).getTitle();
                 Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, clickedCourse);
                 startActivity(intent);
@@ -144,10 +151,11 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //    }
 
+
     private void prepareRecipes() {
-        courseList.clear();
+        recipeList.clear();
         mAuth = FirebaseAuth.getInstance();
-        String user = mAuth.getCurrentUser().getDisplayName();
+        String user = mAuth.getCurrentUser().getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(user)
                 .get()
@@ -156,11 +164,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Course course = document.toObject(Course.class);
-                                courseList.add(course);
+                                Recipe recipe = document.toObject(Recipe.class);
+                                recipeList.add(recipe);
                                 courseAdapter.notifyDataSetChanged();
                             }
-                            Log.d(TAG, courseList.toString());
+                            Log.d(TAG, recipeList.toString());
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -254,41 +262,53 @@ public class MainActivity extends AppCompatActivity {
                 deleteUser();
                 startActivity(new Intent(this, UnsignedUser.class));
                 return true;
+            case R.id.search:
+                throw new RuntimeException("Test Crash");
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void searchUser() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db
+                .collection("xyJeSyoJ7qULzMcSkt4U0MBoSio1")
+                .document("user");
+        docRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
+                        Toast.makeText(MainActivity.this, user.getEmail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
     private void deleteUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String deletedUser = mAuth.getCurrentUser().getDisplayName().toString();
-        final Intent intent = new Intent(this, UnsignedUser.class);
         user.delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            Log.d(TAG, "User account deleted");
-                            startActivity(intent);
-                            db.collection("users")
-                                    .document(deletedUser)
-                                    .delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "DocumentSnapshot succesfully deleted!");
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error deleting document", e);
-                                        }
-                                    });
+                            Log.d(TAG, "User deleted");
                         }
                     }
                 });
     }
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        final Intent intent = new Intent(this, UnsignedUser.class);
+//        user.delete()
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+//                            Log.d(TAG, "User account deleted");
+//                            startActivity(intent);
+//                        }
+//                    }
+//                });
+//    }
 }

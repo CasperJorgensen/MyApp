@@ -4,20 +4,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class Course {
+public class Recipe {
     private String author;
-    private String courseName;
+    private String title;
     private String meal;
     private int numberOfServings;
 //    private List<String> ingredients;
     private List<String> steps;
     private Date dateCreated;
+    private Date dateEdited;
+    private int rating;
     private String picturePath;
     private Map<String, List<String>> ingredients;
 
-    public Course(String author, String courseName, String meal, int numberOfServings, List<String> steps, Date dateCreated, String picturePath, Map<String, List<String>> ingredients) {
+    public Recipe(String author, String courseName, String meal, int numberOfServings, List<String> steps, Date dateCreated, String picturePath, Map<String, List<String>> ingredients) {
         this.author = author;
-        this.courseName = courseName;
+        this.title = courseName;
         this.meal = meal;
         this.numberOfServings = numberOfServings;
 //        this.ingredients = ingredients;
@@ -27,11 +29,15 @@ public class Course {
         this.ingredients = ingredients;
     }
 
-    public Course() {
-        this.courseName = courseName;
+    public Recipe() {
+        this.title = title;
         this.numberOfServings = numberOfServings;
         this.ingredients = ingredients;
         this.steps = steps;
+    }
+
+    public Recipe(String userName, String toString, String toString1, int parseInt, List<String> steps, Date date, Map<String, List<String>> ingredientsList) {
+
     }
 
     public Map<String, List<String>> getIngredients() {
@@ -58,12 +64,12 @@ public class Course {
         this.author = author;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getMeal() {

@@ -13,7 +13,7 @@ import java.util.Map;
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Course> ingredientsList;
+    private List<Recipe> ingredientsList;
     private Map<String, List<String>> testIngredient;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -26,7 +26,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
     }
 
-    public IngredientsAdapter(Context mContext, List<Course> ingredientsList) {
+    public IngredientsAdapter(Context mContext, List<Recipe> ingredientsList) {
         this.mContext = mContext;
         this.ingredientsList = ingredientsList;
     }
@@ -43,9 +43,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         int l = 0;
         int i = 0;
-        Course course = ingredientsList.get(position);
+        Recipe recipe = ingredientsList.get(position);
 
-        Map<String, List<String>> ingredientList = course.getIngredients();
+        Map<String, List<String>> ingredientList = recipe.getIngredients();
         for (Map.Entry<String, List<String>> entry : ingredientList.entrySet()) {
             String key = entry.getKey();
             List value = entry.getValue();

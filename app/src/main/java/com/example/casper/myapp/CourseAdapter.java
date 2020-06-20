@@ -28,7 +28,7 @@ import java.util.List;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Course> courseList;
+    private List<Recipe> recipeList;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count, date, author;
@@ -45,9 +45,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         }
     }
 
-    public CourseAdapter(Context mContext, List<Course> courseList) {
+    public CourseAdapter(Context mContext, List<Recipe> recipeList) {
         this.mContext = mContext;
-        this.courseList = courseList;
+        this.recipeList = recipeList;
     }
 
     @Override
@@ -66,8 +66,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         String meal = mContext.getString(R.string.recipe_meal);
         String serves = mContext.getString(R.string.recipe_servers);
         String dates = mContext.getString(R.string.recipe_date_created);
-        Course course = courseList.get(position);
-        Date date = course.getDateCreated();
+        Recipe recipe = recipeList.get(position);
+        Date date = recipe.getDateCreated();
 
         FirebaseStorage storage;
         StorageReference storageReference;
@@ -75,27 +75,37 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        storageReference.child(course.getPicturePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(mContext)
-                        .load(uri)
-                        .apply(new RequestOptions().centerCrop())
-                        .into(holder.thumbnail);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Glide.with(mContext)
-                        .load("https://firebasestorage.googleapis.com/v0/b/workingapp-28df8.appspot.com/o/images%2Fphone.png?alt=media&token=78ad2c6d-bdfe-4b82-8bc3-1648e8e604fd")
-                        .into(holder.thumbnail);
-            }
-        });
+        Glide.with(mContext)
+                .load("https://madenimitliv.dk/wp-content/uploads/2019/06/DSC_0014.jpg")
+                .apply(new RequestOptions().centerCrop())
+                .into(holder.thumbnail);
 
-        holder.author.setText(author + ": " + course.getAuthor());
-        holder.title.setText(course.getCourseName());
-        holder.count.setText(meal + ": " + course.getMeal() + "\n" + serves + ": " + course.getNumberOfServings());
-        holder.date.setText(dates + ": " + DateFormat.getDateInstance(DateFormat.MEDIUM).format(date));
+//        storageReference.child(recipe.getPicturePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Glide.with(mContext)
+//                        .load("https://madenimitliv.dk/wp-content/uploads/2019/06/DSC_0014.jpg")
+////                        .apply(new RequestOptions().centerCrop())
+//                        .into(holder.thumbnail);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Glide.with(mContext)
+//                        .load("https://madenimitliv.dk/wp-content/uploads/2019/06/DSC_0014.jpg")
+//                        .into(holder.thumbnail);
+//            }
+//        });
+
+//        holder.author.setText(author + ": " + recipe.getAuthor());
+//        holder.title.setText(recipe.getTitle());
+//        holder.count.setText(meal + ": " + recipe.getMeal() + "\n" + serves + ": " + recipe.getNumberOfServings());
+//        holder.date.setText(dates + ": " + DateFormat.getDateInstance(DateFormat.MEDIUM).format(date));
+
+        holder.author.setText("Casper J");
+        holder.title.setText("Pizza");
+        holder.count.setText("Hovedret \n2");
+        holder.date.setText("18-06-2020");
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +143,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return courseList.size();
+        return recipeList.size();
     }
 }

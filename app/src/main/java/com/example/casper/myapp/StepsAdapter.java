@@ -12,7 +12,7 @@ import java.util.List;
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Course> stepsList;
+    private List<Recipe> stepsList;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView steps;
@@ -23,7 +23,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
         }
     }
 
-    public StepsAdapter(Context mContext, List<Course> stepsList) {
+    public StepsAdapter(Context mContext, List<Recipe> stepsList) {
         this.mContext = mContext;
         this.stepsList = stepsList;
     }
@@ -38,9 +38,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        Course course = stepsList.get(position);
-        for (int i = 0; i < course.getSteps().size(); i++) {
-            holder.steps.append((i + 1)+ " - " + course.getSteps().get(i) + "\n");
+        Recipe recipe = stepsList.get(position);
+        for (int i = 0; i < recipe.getSteps().size(); i++) {
+            holder.steps.append((i + 1)+ " - " + recipe.getSteps().get(i) + "\n");
         }
     }
 

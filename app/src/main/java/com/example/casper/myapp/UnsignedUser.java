@@ -17,7 +17,7 @@ public class UnsignedUser extends AppCompatActivity {
 
         signUpButton = (Button) findViewById(R.id.signUp);
         logInButton = (Button) findViewById(R.id.logIn);
-        final Intent signUpIntent = new Intent(this, SignUp.class);
+        final Intent signUpIntent = new Intent(this, SignUpActivity.class);
         final Intent logInIntent = new Intent(this, LoginActivity.class);
         signUpButton.setOnClickListener(new View.OnClickListener() {
 

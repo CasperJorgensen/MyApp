@@ -30,6 +30,7 @@ import com.example.casper.myapp.helper.OnStartDragListener;
 import com.example.casper.myapp.helper.SimpleItemTouchHelperCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -52,6 +53,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private ItemTouchHelper mItemTouchHelper;
 
@@ -89,6 +91,8 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_recipe);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -225,18 +229,16 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         ingredientsList.put("New batter", Arrays.asList("Four", "Five", "Six"));
         setTitle(ingredientsList.keySet().toArray()[0] + "");
         mAuth = FirebaseAuth.getInstance();
-        String imagePath = mAuth.getCurrentUser().getDisplayName() + "/" + editTitle.getText().toString();
-        String user = mAuth.getCurrentUser().getDisplayName();
+        String user = mAuth.getCurrentUser().getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Date date = Calendar.getInstance().getTime();
-        Course course = new Course(
+        Recipe recipe = new Recipe(
                 user,
                 editTitle.getText().toString(),
-                spinner.getSelectedItem().toString(),
+                "Mealmeal",
                 Integer.parseInt(editServings.getText().toString()),
                 steps,
                 date,
-                imagePath,
                 ingredientsList
         );
 
@@ -251,16 +253,20 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
 //                ingredients
 //        );
 
-        db.collection(user)
+        db.collection(mAuth.getUid())
                 .document(editTitle.getText().toString())
-                .set(course)
+                .set(recipe)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Created new course");
-                imageMethod();
-            }
-        });
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Created new course");
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "create_new_recipe");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                        bundle.putInt("card_id", 912);
+                        mFirebaseAnalytics.logEvent("card_open", bundle);
+                    }
+                });
     }
 
     private boolean validateForm() {

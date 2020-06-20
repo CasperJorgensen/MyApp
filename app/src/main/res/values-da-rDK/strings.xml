@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyApp</string>
+    <string name="app_name">Opskriften</string>
     <string name="recipe_author">Forfatter</string>
     <string name="not_signed_in" translatable="false">Du er ikke logget ind</string>
     <string name="username_text" translatable="false">Brugernavn</string>
