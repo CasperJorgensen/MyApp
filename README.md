@@ -14,5 +14,5 @@ Homepage once logged in, showing created recipes in cards. <br>
 <br>
 
 
-Screen for creating new recipe, allowing to take a picture which will get uploaded to Firebase Storage.
+Screen for creating new recipe, allowing to take a picture which will get uploaded to Firebase Storage. <br>
 ![Recipe overview](https://user-images.githubusercontent.com/32261764/92886171-bb2bfe80-f413-11ea-904a-38777f956590.jpg)
